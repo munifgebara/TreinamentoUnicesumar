@@ -1,24 +1,29 @@
 package br.com.munif.cursos.treinamento.entidades;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.envers.Audited;
 
 @Entity
-@Table(name = "pais")
+@Table(name = "estado")
 @Audited
-public class Pais extends BaseEntity {
+public class Estado extends BaseEntity {
 	
 	private String nome;
+	
+	@ManyToOne
+	private Pais pais;
 
-	public Pais() {
+	public Estado() {
 		super();
 	}
 
-	public Pais(String nome) {
+	public Estado(String nome,Pais pais) {
 		super();
 		this.nome = nome;
+		this.setPais(pais);
 	}
 
 	public String getNome() {
@@ -28,6 +33,16 @@ public class Pais extends BaseEntity {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+
+	public Pais getPais() {
+		return pais;
+	}
+
+	public void setPais(Pais pais) {
+		this.pais = pais;
+	}
+	
+	
 	
 
 }

@@ -11,7 +11,7 @@ import java.util.Date;
 
 @Entity
 @RevisionEntity(MinhaRevisionListener.class)
-@Table(name = "vic_revision_entity")
+@Table(name = "transacao")
 public class MinhaRevisionEntity implements Serializable {
 
     @Id
