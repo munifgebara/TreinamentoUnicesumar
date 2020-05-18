@@ -7,7 +7,7 @@ import org.hibernate.envers.Audited;
 
 @Entity
 @Table(name = "pais")
-@Audited
+
 public class Pais extends BaseEntity {
 	
 	private String nome;
