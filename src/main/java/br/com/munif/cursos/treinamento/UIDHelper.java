@@ -40,7 +40,7 @@ public class UIDHelper {
                 for (int i = 0; i < mac.length; i++) {
                     sb.append(String.format("%02X", mac[i]));
                 }
-                toReturn += sb.toString();
+                toReturn = sb.toString();
             }
 
         } catch (Exception ex) {
