@@ -44,6 +44,7 @@ public class TreinamentounicesumarApplication {
 		Estado prAm = estadoRepository.save(new Estado("Amambai", pr));
 		  
 		Cidade cidade = cidadeRepository.save(new Cidade("Maringa", brPr)  );
+		Cidade cidade2 = cidadeRepository.save(new Cidade("Londrina", brPr)  );
 		 
 	} 
 	
