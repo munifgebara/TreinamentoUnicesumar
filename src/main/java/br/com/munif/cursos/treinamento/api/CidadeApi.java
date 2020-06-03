@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -76,12 +77,39 @@ public class CidadeApi {
 		novoValorCidade.setId(id);
 		novoValorCidade.setCd(valorVelhoDeCidade.get().getCd());
 		novoValorCidade.setUd(new Date());
-    	Cidade cidadeSalva= respositorioCidade.save(novoValorCidade);
+      	Cidade cidadeSalva= respositorioCidade.save(novoValorCidade);
         return new ResponseEntity <>(cidadeSalva, HttpStatus.OK);
     }
 	
-	
-	
-	
+    @PatchMapping(value = "/{id}")
+    public ResponseEntity<Cidade> alterarAlguns(@PathVariable("id") String id, @RequestBody Cidade novoValorCidade) {
+		Optional<Cidade> valorVelhoDeCidade=respositorioCidade.findById(id);
+		
+		if (!valorVelhoDeCidade.isPresent()) {
+			return ResponseEntity.notFound().build();
+		}
+		
+		Cidade velhoValorCidade=valorVelhoDeCidade.get();
+
+		
+		
+		// Vai ser usado um código genérico	
+		if (novoValorCidade.getNome()!=null) {
+			velhoValorCidade.setNome(novoValorCidade.getNome());
+		}
+		if (novoValorCidade.getEstado()!=null) {
+			velhoValorCidade.setEstado(novoValorCidade.getEstado());
+		}
+		if (novoValorCidade.getPopulacao()!=null) {
+			velhoValorCidade.setPopulacao(novoValorCidade.getPopulacao());
+		}
+		// Vai ser usado um código genérico		
+		
+		
+		velhoValorCidade.setUd(new Date());
+        Cidade cidadeSalva= respositorioCidade.save(velhoValorCidade);
+        return new ResponseEntity <>(cidadeSalva, HttpStatus.OK);
+    }
 	
 }
+

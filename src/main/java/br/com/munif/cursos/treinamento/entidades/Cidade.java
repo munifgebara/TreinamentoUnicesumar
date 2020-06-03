@@ -14,6 +14,8 @@ public class Cidade extends BaseEntity {
 	
 	private String nome;
 	
+	private Long populacao;
+	
 	@ManyToOne
 	private Estado estado;
 
@@ -25,6 +27,7 @@ public class Cidade extends BaseEntity {
 		super();
 		this.nome = nome;
 		this.setEstado(estado);
+		populacao=1000l;
 	}
 
 	public String getNome() {
@@ -42,6 +45,16 @@ public class Cidade extends BaseEntity {
 	public void setEstado(Estado estado) {
 		this.estado = estado;
 	}
+
+	public Long getPopulacao() {
+		return populacao;
+	}
+
+	public void setPopulacao(Long populacao) {
+		this.populacao = populacao;
+	}
+	
+	
 	
 	
 	
