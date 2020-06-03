@@ -1,7 +1,6 @@
 package br.com.munif.cursos.treinamento.api;
 
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -23,29 +22,26 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.munif.cursos.treinamento.entidades.Cidade;
 import br.com.munif.cursos.treinamento.entidades.Estado;
 import br.com.munif.cursos.treinamento.entidades.Pais;
+import br.com.munif.cursos.treinamento.negocios.CidadeService;
 import br.com.munif.cursos.treinamento.repositorios.CidadeRepository;
-
 @RestController
 @RequestMapping("/api/cidades")
 public class CidadeApi {
 	
 	/// API <-------> SERVICE <------> REPOSITORY <---------> BANCO
 	/// API <------- HORRIVEL -------> REPOSITORY <---------> BANCO
-	
+
 	@Autowired
-	private CidadeRepository respositorioCidade;
-	
-	
+	private CidadeService cidadeService;
 	
 	@GetMapping
 	public List<Cidade> consultaTodos(){
-		List<Cidade> todas = respositorioCidade.findAll();
-		return todas;
+		return cidadeService.consultaTodos();
 	}
 
 	@GetMapping(value = "/{id}")
     public ResponseEntity<Cidade> consultaUm(@PathVariable  String id) {
-		Optional<Cidade> cid=respositorioCidade.findById(id);
+		Optional<Cidade> cid=cidadeService.consultaPorId(id);
 		if (cid.isPresent()) {
 		   return  ResponseEntity.ok(cid.get());
 		}
@@ -54,45 +50,42 @@ public class CidadeApi {
 	
 	@DeleteMapping(value = "/{id}")
     public ResponseEntity<Cidade> apagaUm(@PathVariable  String id) {
-		Optional<Cidade> cid=respositorioCidade.findById(id);
+		Optional<Cidade> cid=cidadeService.consultaPorId(id);
 		if (!cid.isPresent()) {
 			return ResponseEntity.notFound().build();
 		}
-		respositorioCidade.delete(cid.get());
+		cidadeService.apaga(cid.get());
 		return  ResponseEntity.ok(cid.get());
     }
 	
     @PostMapping
     public ResponseEntity<Cidade> novo(@RequestBody Cidade nova) {
-    	Cidade cidadeSalva= respositorioCidade.save(nova);
+    	Cidade cidadeSalva= cidadeService.salva(nova);
         return new ResponseEntity <>(cidadeSalva, HttpStatus.CREATED);
     }
 	
     @PutMapping(value = "/{id}")
     public ResponseEntity<Cidade> alterar(@PathVariable("id") String id, @RequestBody Cidade novoValorCidade) {
-		Optional<Cidade> valorVelhoDeCidade=respositorioCidade.findById(id);
+		Optional<Cidade> valorVelhoDeCidade=cidadeService.consultaPorId(id);
 		if (!valorVelhoDeCidade.isPresent()) {
 			return ResponseEntity.notFound().build();
 		}
 		novoValorCidade.setId(id);
 		novoValorCidade.setCd(valorVelhoDeCidade.get().getCd());
 		novoValorCidade.setUd(new Date());
-      	Cidade cidadeSalva= respositorioCidade.save(novoValorCidade);
+      	Cidade cidadeSalva= cidadeService.salva(novoValorCidade);
         return new ResponseEntity <>(cidadeSalva, HttpStatus.OK);
     }
 	
     @PatchMapping(value = "/{id}")
     public ResponseEntity<Cidade> alterarAlguns(@PathVariable("id") String id, @RequestBody Cidade novoValorCidade) {
-		Optional<Cidade> valorVelhoDeCidade=respositorioCidade.findById(id);
-		
-		if (!valorVelhoDeCidade.isPresent()) {
+		Optional<Cidade> valorVelhoDeCidade=cidadeService.consultaPorId(id);
+   	    if (!valorVelhoDeCidade.isPresent()) {
 			return ResponseEntity.notFound().build();
 		}
 		
 		Cidade velhoValorCidade=valorVelhoDeCidade.get();
 
-		
-		
 		// Vai ser usado um código genérico	
 		if (novoValorCidade.getNome()!=null) {
 			velhoValorCidade.setNome(novoValorCidade.getNome());
@@ -105,9 +98,8 @@ public class CidadeApi {
 		}
 		// Vai ser usado um código genérico		
 		
-		
 		velhoValorCidade.setUd(new Date());
-        Cidade cidadeSalva= respositorioCidade.save(velhoValorCidade);
+        Cidade cidadeSalva= cidadeService.salva(velhoValorCidade);
         return new ResponseEntity <>(cidadeSalva, HttpStatus.OK);
     }
 	
