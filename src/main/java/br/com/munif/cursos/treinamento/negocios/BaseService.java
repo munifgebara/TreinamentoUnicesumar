@@ -4,18 +4,10 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Service;
 
 import br.com.munif.cursos.treinamento.entidades.BaseEntity;
-import br.com.munif.cursos.treinamento.entidades.Cidade;
-import br.com.munif.cursos.treinamento.entidades.Estado;
-import br.com.munif.cursos.treinamento.repositorios.CidadeRepository;
-import br.com.munif.cursos.treinamento.repositorios.EstadoRepository;
 
-@Service
-@Scope("prototype")
 public abstract class BaseService<T extends BaseEntity> {
 	
 	@Autowired

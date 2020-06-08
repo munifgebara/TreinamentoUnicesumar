@@ -14,17 +14,22 @@ public class Estado extends BaseEntity {
 	
 	private String nome;
 	
+	private Long populacao; 
+	
 	@ManyToOne
 	private Pais pais;
 
 	public Estado() {
 		super();
+		populacao=0l;
+		
 	}
 
 	public Estado(String nome,Pais pais) {
 		super();
 		this.nome = nome;
 		this.setPais(pais);
+		this.populacao=0l;
 	}
 
 	public String getNome() {
@@ -42,6 +47,16 @@ public class Estado extends BaseEntity {
 	public void setPais(Pais pais) {
 		this.pais = pais;
 	}
+
+	public Long getPopulacao() {
+		return populacao;
+	}
+
+	public void setPopulacao(Long populacao) {
+		this.populacao = populacao;
+	}
+	
+	
 	
 	
 	

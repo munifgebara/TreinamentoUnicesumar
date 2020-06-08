@@ -1,6 +1,7 @@
 package br.com.munif.cursos.treinamento;
 
 import javax.annotation.PostConstruct;
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -9,6 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import br.com.munif.cursos.treinamento.entidades.Cidade;
 import br.com.munif.cursos.treinamento.entidades.Estado;
 import br.com.munif.cursos.treinamento.entidades.Pais;
+import br.com.munif.cursos.treinamento.negocios.CidadeService;
 import br.com.munif.cursos.treinamento.repositorios.CidadeRepository;
 import br.com.munif.cursos.treinamento.repositorios.EstadoRepository;
 import br.com.munif.cursos.treinamento.repositorios.PaisRepository;
@@ -24,7 +26,7 @@ public class TreinamentounicesumarApplication {
 	private EstadoRepository estadoRepository;
 	
 	@Autowired
-	private CidadeRepository cidadeRepository;
+	private CidadeService cidadeService;
 
 	
 	public static void main(String[] args) {
@@ -43,8 +45,8 @@ public class TreinamentounicesumarApplication {
 		
 		Estado prAm = estadoRepository.save(new Estado("Amambai", pr));
 		  
-		Cidade cidade = cidadeRepository.save(new Cidade("Maringa", brPr)  );
-		Cidade cidade2 = cidadeRepository.save(new Cidade("Londrina", brPr)  );
+		Cidade cidade = cidadeService.salva(new Cidade("Maringa", brPr)  );
+		Cidade cidade2 = cidadeService.salva(new Cidade("Londrina", brPr)  );
 		 
 	} 
 	

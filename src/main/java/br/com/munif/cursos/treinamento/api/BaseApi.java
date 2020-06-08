@@ -20,9 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.munif.cursos.treinamento.entidades.BaseEntity;
 import br.com.munif.cursos.treinamento.negocios.BaseService;
-@RestController
-@Scope("prototype")
-public class BaseApi <T extends BaseEntity> {
+
+public abstract class BaseApi <T extends BaseEntity> {
 	
 	/// <--MODEL ou TO--> API <-MODEL-> SERVICE <-MODEL-> REPOSITORY (MODEL DO MVC1) <---------> BANCO
 	/// API <------- HORRIVEL -------> REPOSITORY <---------> BANCO
@@ -74,7 +73,7 @@ public class BaseApi <T extends BaseEntity> {
     }
 	
     //TODO ARRUMAR O MÈTODO
-    @PatchMapping(value = "/{id}")
+    //@PatchMapping(value = "/{id}")
     public ResponseEntity<T> alterarAlguns(@PathVariable("id") String id, @RequestBody T novoValor) {
 		Optional<T> valorVelhode=service.consultaPorId(id);
    	    if (!valorVelhode.isPresent()) {
